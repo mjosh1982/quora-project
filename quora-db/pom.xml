@@ -113,6 +113,7 @@
                                 <configuration>
                                     <orderFile>none</orderFile>
                                     <srcFiles>
+                                        <!--srcFile>${sql.path}/db-setup.sql</srcFile-->
                                         <srcFile>${sql.path}/quora.sql</srcFile>
                                         <srcFile>${sql.path}/quora_test.sql</srcFile>
                                     </srcFiles>
