@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * An advice created to intercept the exceptions thrown by the application.
+ * An advice class created to intercept the exceptions thrown by the application.
  * The respective methods of the exception intercept the exception and throw
  * relevant messages to the rest API.s
  */

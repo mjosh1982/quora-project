@@ -3,6 +3,7 @@ package com.upgrad.quora.api.controller;
 
 import com.upgrad.quora.service.business.SignUpBusinessService;
 import com.upgrad.quora.service.entity.UserEntity;
+import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,9 @@ import com.upgrad.quora.api.model.SignupUserRequest;
 
 import java.util.UUID;
 
+/**
+ * Controller class for defining rest API endpoints for
+ */
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -24,12 +28,12 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/user/signup", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SignupUserResponse> signUp(final SignupUserRequest signupUserRequest) {
+    public ResponseEntity<SignupUserResponse> signUp(final SignupUserRequest signupUserRequest) throws SignUpRestrictedException {
         UserEntity userEntity = new UserEntity();
         userEntity.setUuid(UUID.randomUUID().toString());
         userEntity.setFirstName(signupUserRequest.getFirstName());
         userEntity.setLastName(signupUserRequest.getLastName());
-        userEntity.setUserName(signupUserRequest.getUserName());
+        userEntity.setUsername(signupUserRequest.getUserName());
         userEntity.setEmail(signupUserRequest.getEmailAddress());
         userEntity.setPassword(signupUserRequest.getPassword());
         userEntity.setCountry(signupUserRequest.getCountry());
@@ -38,6 +42,7 @@ public class UserController {
         userEntity.setContactNumber(signupUserRequest.getContactNumber());
         UserEntity createdUserEntity = signUpBusinessService.signUp(userEntity);
         SignupUserResponse userResponse = new SignupUserResponse().id(createdUserEntity.getUuid()).status("REGISTERED");
-        return new ResponseEntity<SignupUserResponse>(userResponse, HttpStatus.CREATED);
+        ResponseEntity<SignupUserResponse> response = new ResponseEntity<SignupUserResponse>(userResponse, HttpStatus.CREATED);
+        return response;
     }
 }
