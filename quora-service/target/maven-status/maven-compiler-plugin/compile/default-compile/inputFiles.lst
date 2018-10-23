@@ -6,6 +6,7 @@
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/business/JwtTokenProvider.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthorizationFailedException.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/InvalidQuestionException.java
+/Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/entity/UserAuthEntity.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/AnswerNotFoundException.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/common/UnexpectedException.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/ServiceConfiguration.java
