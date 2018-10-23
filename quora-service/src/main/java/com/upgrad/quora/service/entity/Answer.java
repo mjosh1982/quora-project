@@ -7,6 +7,7 @@ import java.time.ZonedDateTime;
 
 /**
  * POJO class for ANSWER table.
+ * Updates for Answer entity
  */
 @Entity
 @Table(name = "question", schema = "public")
