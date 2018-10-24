@@ -1,6 +1,9 @@
 com/upgrad/quora/service/common/GenericErrorCode.class
+com/upgrad/quora/service/business/AuthenticationService.class
 com/upgrad/quora/service/entity/UserEntity.class
+com/upgrad/quora/service/entity/Answer.class
 com/upgrad/quora/service/ServiceConfiguration.class
+com/upgrad/quora/service/entity/Question.class
 com/upgrad/quora/service/business/JwtTokenProvider.class
 com/upgrad/quora/service/dao/UserDao.class
 com/upgrad/quora/service/common/UnexpectedException.class
@@ -8,6 +11,7 @@ com/upgrad/quora/service/exception/InvalidQuestionException.class
 com/upgrad/quora/service/exception/AuthorizationFailedException.class
 com/upgrad/quora/service/business/SignUpBusinessService.class
 com/upgrad/quora/service/common/ErrorCode.class
+com/upgrad/quora/service/type/RoleType.class
 com/upgrad/quora/service/exception/SignOutRestrictedException.class
 com/upgrad/quora/service/exception/AnswerNotFoundException.class
 com/upgrad/quora/service/business/PasswordCryptographyProvider.class
@@ -15,3 +19,4 @@ com/upgrad/quora/service/business/UserAdminService.class
 com/upgrad/quora/service/exception/SignUpRestrictedException.class
 com/upgrad/quora/service/exception/UserNotFoundException.class
 com/upgrad/quora/service/exception/AuthenticationFailedException.class
+com/upgrad/quora/service/entity/UserAuthEntity.class

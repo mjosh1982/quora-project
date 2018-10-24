@@ -1,6 +1,7 @@
 package com.upgrad.quora.service.dao;
 
 
+import com.upgrad.quora.service.entity.UserAuthEntity;
 import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import org.springframework.stereotype.Repository;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
 
 /**
  * DAO class for providing user related database trasactions.
@@ -63,6 +62,45 @@ public class UserDao {
             return entityManager.createNamedQuery("userByEmail", UserEntity.class).setParameter("email", emailid)
                     .getSingleResult();
         } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+
+    public UserAuthEntity getUserAuthToken(final String authorizationToken) {
+        try {
+            return entityManager
+                    .createNamedQuery("userAuthTokenByAccessToken", UserAuthEntity.class).setParameter("accessToken", authorizationToken)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    /**
+     * method to get user Entity by uuid.
+     *
+     * @param userUUid uuid of the user
+     * @return UserEntity object
+     */
+    public UserEntity getUser(String userUUid) {
+        try {
+            return entityManager.createNamedQuery("userByUuid", UserEntity.class).setParameter("uuid", userUUid).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    /**
+     * method to get the user by username
+     *
+     * @param username username as String value
+     * @return UserEntity Object
+     */
+    public UserEntity getUserByUserName(String username) {
+        try {
+            return entityManager.createNamedQuery("userByUserName", UserEntity.class).setParameter("username", username).getSingleResult();
+        } catch (NoResultException e) {
             return null;
         }
     }
