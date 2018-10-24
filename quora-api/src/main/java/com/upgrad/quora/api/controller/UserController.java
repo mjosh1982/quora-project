@@ -6,6 +6,7 @@ import com.upgrad.quora.service.business.SignUpBusinessService;
 import com.upgrad.quora.service.entity.UserAuthEntity;
 import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AuthenticationFailedException;
+import com.upgrad.quora.service.exception.SignOutRestrictedException;
 import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import com.upgrad.quora.service.type.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.upgrad.quora.api.model.SignupUserResponse;
 import com.upgrad.quora.api.model.SignupUserRequest;
 import com.upgrad.quora.api.model.SigninResponse;
+import com.upgrad.quora.api.model.SignoutResponse;
 
 import java.util.Base64;
 import java.util.UUID;
@@ -32,8 +34,9 @@ import java.util.UUID;
 public class UserController {
 
     //Constant for messages
+    private static final String USER_SUCCESSFULLY_REGISTERED = "USER SUCCESSFULLY REGISTERED";
     private static final String SIGNIN_MESSAGE = "SIGNED IN SUCCESSFULLY";
-    public static final String USER_SUCCESSFULLY_REGISTERED = "USER SUCCESSFULLY REGISTERED";
+    private static final String SIGNED_OUT_SUCCESSFULLY = "SIGNED OUT SUCCESSFULLY";
 
     @Autowired
     SignUpBusinessService signUpBusinessService;
@@ -96,6 +99,22 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("access-token", userAuthToken.getAccessToken());
         return new ResponseEntity<SigninResponse>(authorizedUserResponse, headers, HttpStatus.OK);
+    }
+
+
+    /**
+     * Method used for signing out user using the access token passed as parameter.
+     * If access token is valid or available then SignOutRestrictedException is thrown.
+     *
+     * @param accessToken accesstoken passed as String
+     * @return ResponseEntity object containing SignoutResponse object
+     * @throws SignOutRestrictedException exception thrown in case of no acess token found.
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "user/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<SignoutResponse> signout(@RequestHeader final String accessToken) throws SignOutRestrictedException {
+        UserEntity userEntity = authenticationService.authenticateAccessToken(accessToken);
+        SignoutResponse signOutResponse = new SignoutResponse().id(userEntity.getUuid()).message(SIGNED_OUT_SUCCESSFULLY);
+        return new ResponseEntity<SignoutResponse>(signOutResponse, HttpStatus.OK);
     }
 
 
