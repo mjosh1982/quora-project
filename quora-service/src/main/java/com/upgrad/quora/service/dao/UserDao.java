@@ -117,4 +117,30 @@ public class UserDao {
         entityManager.persist(userAuthTokenEntity);
         return userAuthTokenEntity;
     }
+
+    /**
+     * Method used for getting user by it's access token.
+     * If accesstoken is not available in database then it returns null.
+     *
+     * @param accessToken String indicating the accessToken
+     * @return UserAuthEntity
+     */
+    public UserAuthEntity getUserByAccessToken(String accessToken) {
+        try {
+            return entityManager.createNamedQuery(USER_AUTH_TOKEN_BY_ACCESS_TOKEN, UserAuthEntity.class).setParameter("accessToken", accessToken)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Method used for updating the logoutAt date of USerAuth table.
+     * Once, user is successfully logged out, we will update the logoutAt date.
+     *
+     * @param userAuthEntity the userAuthEntity object which needs updation
+     */
+    public void updateLogOutDate(UserAuthEntity userAuthEntity) {
+        entityManager.persist(userAuthEntity);
+    }
 }
