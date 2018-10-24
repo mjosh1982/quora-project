@@ -1,8 +1,10 @@
 package com.upgrad.quora.service.business;
 
 import com.upgrad.quora.service.dao.UserDao;
+import com.upgrad.quora.service.entity.UserAuthEntity;
 import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.SignUpRestrictedException;
+import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -40,4 +42,16 @@ public class UserAdminService {
         userEntity.setPassword(encryptedText[1]);
         return userDao.createUser(userEntity);
     }
+
+    public UserEntity getUser(String userUuid, String authorizationToken) throws UserNotFoundException {
+        UserAuthEntity userAuthTokenEntity = userDao.getUserAuthToken(authorizationToken);
+        UserEntity userEntity = userDao.getUser(userUuid);
+        if (userEntity.getUuid().equals(userUuid)) {
+            return userEntity;
+        } else {
+            throw new UserNotFoundException("USR-001", "User with entered uuid does not exist");
+        }
+    }
+
+
 }

@@ -1,10 +1,13 @@
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/business/SignUpBusinessService.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/dao/UserDao.java
+/Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/type/RoleType.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/common/ErrorCode.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/UserNotFoundException.java
+/Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/entity/Question.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/business/UserAdminService.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/business/JwtTokenProvider.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthorizationFailedException.java
+/Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/entity/Answer.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/InvalidQuestionException.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/entity/UserAuthEntity.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/AnswerNotFoundException.java
@@ -13,6 +16,7 @@
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/AuthenticationFailedException.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/SignOutRestrictedException.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/entity/UserEntity.java
+/Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/business/AuthenticationService.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/business/PasswordCryptographyProvider.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/common/GenericErrorCode.java
 /Users/manojjoshi/Downloads/quora-project/quora-service/src/main/java/com/upgrad/quora/service/exception/SignUpRestrictedException.java
