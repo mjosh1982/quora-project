@@ -27,10 +27,10 @@ public class AuthenticationService {
      * Method is used for providing authentication to a user
      * The method takes username and password as argument.
      *
-     * @param username
-     * @param password
-     * @return
-     * @throws AuthenticationFailedException
+     * @param username String username
+     * @param password String password
+     * @return UserAuthEntity object
+     * @throws AuthenticationFailedException exception indicating Authentication failed
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthEntity authenticate(final String username, final String password) throws AuthenticationFailedException {
@@ -49,10 +49,8 @@ public class AuthenticationService {
             userAuthToken.setAccessToken(tokenProvider.generateToken(userEntity.getUuid(), now, expiresAt));
             userAuthToken.setLoginAt(now);
             userAuthToken.setExpiresAt(expiresAt);
-            ///userAuthToken.setCreatedBy("api-backend");
-            //userAuthToken.setCreatedAt(now);
-            //userDao.createAuthToken(userAuthToken);
-            //userEntity.setLastLoginAt(now);
+            userAuthToken.setUuid(userEntity.getUuid());
+            userDao.createAuthToken(userAuthToken);
             return userAuthToken;
 
         } else {

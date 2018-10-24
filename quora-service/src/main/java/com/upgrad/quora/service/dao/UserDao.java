@@ -3,7 +3,6 @@ package com.upgrad.quora.service.dao;
 
 import com.upgrad.quora.service.entity.UserAuthEntity;
 import com.upgrad.quora.service.entity.UserEntity;
-import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,6 +14,12 @@ import javax.persistence.PersistenceContext;
  */
 @Repository
 public class UserDao {
+
+    //Constants
+    private static final String USER_BY_EMAIL = "userByEmail";
+    private static final String USER_AUTH_TOKEN_BY_ACCESS_TOKEN = "userAuthTokenByAccessToken";
+    private static final String USER_BY_UUID = "userByUuid";
+    private static final String USER_BY_USER_NAME = "userByUserName";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -37,11 +42,10 @@ public class UserDao {
      *
      * @param username userName used for signUp
      * @return boolean indicating whether the userName exists or not.
-     * @throws SignUpRestrictedException exception to be propagated above
      */
     public UserEntity checkUserName(final String username) {
         try {
-            return entityManager.createNamedQuery("userByUserName", UserEntity.class).setParameter("username", username)
+            return entityManager.createNamedQuery(USER_BY_USER_NAME, UserEntity.class).setParameter("username", username)
                     .getSingleResult();
         } catch (NoResultException nre) {
             return null;
@@ -55,11 +59,10 @@ public class UserDao {
      *
      * @param emailid userName used for signUp
      * @return boolean indicating whether the userName exists or not.
-     * @throws SignUpRestrictedException exception to be propagated above
      */
     public UserEntity checkEmailid(String emailid) {
         try {
-            return entityManager.createNamedQuery("userByEmail", UserEntity.class).setParameter("email", emailid)
+            return entityManager.createNamedQuery(USER_BY_EMAIL, UserEntity.class).setParameter("email", emailid)
                     .getSingleResult();
         } catch (NoResultException nre) {
             return null;
@@ -70,7 +73,7 @@ public class UserDao {
     public UserAuthEntity getUserAuthToken(final String authorizationToken) {
         try {
             return entityManager
-                    .createNamedQuery("userAuthTokenByAccessToken", UserAuthEntity.class).setParameter("accessToken", authorizationToken)
+                    .createNamedQuery(USER_AUTH_TOKEN_BY_ACCESS_TOKEN, UserAuthEntity.class).setParameter("accessToken", authorizationToken)
                     .getSingleResult();
         } catch (NoResultException nre) {
             return null;
@@ -85,7 +88,7 @@ public class UserDao {
      */
     public UserEntity getUser(String userUUid) {
         try {
-            return entityManager.createNamedQuery("userByUuid", UserEntity.class).setParameter("uuid", userUUid).getSingleResult();
+            return entityManager.createNamedQuery(USER_BY_UUID, UserEntity.class).setParameter("uuid", userUUid).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
@@ -99,9 +102,19 @@ public class UserDao {
      */
     public UserEntity getUserByUserName(String username) {
         try {
-            return entityManager.createNamedQuery("userByUserName", UserEntity.class).setParameter("username", username).getSingleResult();
+            return entityManager.createNamedQuery(USER_BY_USER_NAME, UserEntity.class).setParameter("username", username).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    /**
+     * method used for creating the authtoken and setting it in the database table user_auth
+     *
+     * @param userAuthTokenEntity userAuthtoken entity to be created.
+     */
+    public UserAuthEntity createAuthToken(final UserAuthEntity userAuthTokenEntity) {
+        entityManager.persist(userAuthTokenEntity);
+        return userAuthTokenEntity;
     }
 }

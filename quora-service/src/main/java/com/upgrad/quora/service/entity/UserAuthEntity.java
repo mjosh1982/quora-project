@@ -30,11 +30,13 @@ public class UserAuthEntity {
     //@OneToOne
     //@JoinColumn(name = "uuid", referencedColumnName = "uuid")
     @Column(name = "uuid")
+    @NotNull
     @Size(max = 200)
     private String uuid;
 
 
     @ManyToOne
+    @NotNull
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
 
