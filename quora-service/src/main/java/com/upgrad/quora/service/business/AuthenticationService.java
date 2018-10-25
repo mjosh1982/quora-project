@@ -40,6 +40,9 @@ public class AuthenticationService {
             throw new AuthenticationFailedException("ATH-001", "This username does not exist");
         }
 
+        //delete existing auth details for the user in database.
+        //userDao.deleteExistingAuthDetailsForUser(userEntity.getUuid());
+
         String encryptedPwd = passwordCryptographyProvider.encrypt(password, userEntity.getSalt());
         if (encryptedPwd.equals(userEntity.getPassword())) {
             JwtTokenProvider tokenProvider = new JwtTokenProvider(encryptedPwd);
@@ -52,8 +55,8 @@ public class AuthenticationService {
             userAuthToken.setExpiresAt(expiresAt);
             userAuthToken.setUuid(userEntity.getUuid());
             userDao.createAuthToken(userAuthToken);
+            userAuthToken.setLogoutAt(null);
             return userAuthToken;
-
         } else {
             throw new AuthenticationFailedException("ATH-002", "Password failed");
         }
