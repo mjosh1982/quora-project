@@ -21,6 +21,7 @@ public class UserDao {
     private static final String USER_BY_UUID = "userByUuid";
     private static final String USER_BY_USER_NAME = "userByUserName";
     private static final String DELETE_AUTH_TOKEN_BY_UUID = "deleteAuthTokenByUuid";
+    private static final String CHECK_AUTH_TOKEN = "checkAuthToken";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -164,6 +165,23 @@ public class UserDao {
             entityManager.createNamedQuery(DELETE_AUTH_TOKEN_BY_UUID, UserAuthEntity.class).setParameter("uuid", uuid);
         } catch (Exception e) {
             return;
+        }
+    }
+
+
+    /**
+     * method used to check if the auth token is valid.
+     *
+     * @param authorizationToken access token value
+     * @return UserAuthntity Object
+     */
+    public UserAuthEntity checkaAuthToken(final String authorizationToken) {
+        try {
+
+            return entityManager.createNamedQuery(CHECK_AUTH_TOKEN, UserAuthEntity.class).setParameter("accessToken", authorizationToken)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
     }
 }

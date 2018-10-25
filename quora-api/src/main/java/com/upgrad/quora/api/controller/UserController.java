@@ -28,6 +28,7 @@ import java.util.UUID;
 
 /**
  * Controller class for defining rest API endpoints for
+ * user operations
  */
 @RestController
 @RequestMapping("/")

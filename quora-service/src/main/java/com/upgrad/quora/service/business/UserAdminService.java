@@ -6,6 +6,7 @@ import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import com.upgrad.quora.service.exception.UserNotFoundException;
+import com.upgrad.quora.service.type.ActionType;
 import com.upgrad.quora.service.type.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,4 +115,35 @@ public class UserAdminService {
             userDao.deleteUser(user);
         }
     }
+
+    /**
+     * method used for get user auth details for the user with right access token.
+     *
+     * @param authorizationToken access token value
+     * @param actionType         action type based on which we have to send various messages
+     * @return UserAuth Entity object
+     * @throws AuthorizationFailedException exception indicating user is not signed in or not signed out.
+     */
+    public UserAuthEntity getUserByAccessToken(String authorizationToken, ActionType actionType) throws AuthorizationFailedException {
+        UserAuthEntity userAuthTokenEntity = userDao.checkaAuthToken(authorizationToken);
+        if (userAuthTokenEntity == null) {
+            throw new AuthorizationFailedException("ATHR-001", "User has not signed in");
+        }
+        if (userAuthTokenEntity.getLogoutAt() != null) {
+            if (actionType.equals(ActionType.CREATE)) {
+                throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to post a question");
+            } else if (actionType.equals(ActionType.ALL_QUESTION)) {
+                throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to get all questions");
+            } else if (actionType.equals(ActionType.EDIT)) {
+                throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to edit the question");
+            } else if (actionType.equals(ActionType.DELETE)) {
+                throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to delete a question");
+            } else if (actionType.equals(ActionType.ALL_FOR_USER)) {
+                throw new AuthorizationFailedException("ATHR-002", "User is signed out.Sign in first to get all questions posted by a specific user");
+            }
+        }
+        return userAuthTokenEntity;
+    }
+
+
 }
