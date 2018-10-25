@@ -1,3 +1,4 @@
+/Users/manojjoshi/Downloads/quora-project/quora-api/src/main/java/com/upgrad/quora/api/controller/QuestionController.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./com/upgrad/quora/api/model/QuestionDetailsResponse.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./io/swagger/api/ApiResponseMessage.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./com/upgrad/quora/api/model/SignupUserResponse.java
@@ -8,6 +9,7 @@
 /Users/manojjoshi/Downloads/quora-project/quora-api/src/main/java/com/upgrad/quora/api/controller/UserController.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./io/swagger/configuration/HomeController.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./com/upgrad/quora/api/model/UserDeleteResponse.java
+/Users/manojjoshi/Downloads/quora-project/quora-api/src/main/java/com/upgrad/quora/api/controller/AdminController.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./io/swagger/Swagger2SpringBoot.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./io/swagger/RFC3339DateFormat.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./com/upgrad/quora/api/model/SignupUserRequest.java
@@ -21,6 +23,7 @@
 /Users/manojjoshi/Downloads/quora-project/quora-api/src/main/java/com/upgrad/quora/api/QuoraApiApplication.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./io/swagger/api/ApiOriginFilter.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./com/upgrad/quora/api/model/SigninResponse.java
+/Users/manojjoshi/Downloads/quora-project/quora-api/src/main/java/com/upgrad/quora/api/controller/AnswerController.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/src/main/java/com/upgrad/quora/api/controller/CommonController.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./com/upgrad/quora/api/model/AnswerDeleteResponse.java
 /Users/manojjoshi/Downloads/quora-project/quora-api/target/generated-sources/./io/swagger/api/NotFoundException.java

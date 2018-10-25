@@ -46,7 +46,7 @@ public class UserController {
 
 
     /**
-     * Method used for signing up user with all details.
+     * Rest Endpoint method implementation used for signing up user with all details.
      * Since, the user is added through REST API, the role type would be nonadmin
      *
      * @param signupUserRequest request object containing user details.
@@ -75,7 +75,7 @@ public class UserController {
     }
 
     /**
-     * Method used to login a user into the system.
+     * Rest Endpoint method implementation  used to signin a user into the system.
      * The user is first authenticated with his username and password.
      * Then, user auth token is created and with this auth token user
      * is given access to the application.
@@ -86,7 +86,7 @@ public class UserController {
      */
 
     @RequestMapping(method = RequestMethod.POST, path = "user/signin", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SigninResponse> login(@RequestHeader final String authorization) throws AuthenticationFailedException {
+    public ResponseEntity<SigninResponse> signin(@RequestHeader final String authorization) throws AuthenticationFailedException {
         //Basic dXNlcm5hbWU6cGFzc3dvcmQ=
         //above is a sample encoded text where the username is "username" and password is "password" seperated by a ":"
         byte[] decode = Base64.getDecoder().decode(authorization.split("Basic ")[1]);
@@ -103,7 +103,7 @@ public class UserController {
 
 
     /**
-     * Method used for signing out user using the access token passed as parameter.
+     * Rest Endpoint method implementation used for signing out user using the access token passed as parameter.
      * If access token is valid or available then SignOutRestrictedException is thrown.
      *
      * @param accessToken accesstoken passed as String

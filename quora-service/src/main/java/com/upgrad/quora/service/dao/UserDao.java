@@ -20,6 +20,7 @@ public class UserDao {
     private static final String USER_AUTH_TOKEN_BY_ACCESS_TOKEN = "userAuthTokenByAccessToken";
     private static final String USER_BY_UUID = "userByUuid";
     private static final String USER_BY_USER_NAME = "userByUserName";
+    private static final String DELETE_AUTH_TOKEN_BY_UUID = "deleteAuthTokenByUuid";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -142,5 +143,27 @@ public class UserDao {
      */
     public void updateLogOutDate(UserAuthEntity userAuthEntity) {
         entityManager.persist(userAuthEntity);
+    }
+
+    /**
+     * Method used for deletion of user from database.
+     *
+     * @param user User to be deleted.
+     */
+    public void deleteUser(UserEntity user) {
+        entityManager.remove(user);
+    }
+
+    /**
+     * Method used for deleting exiting auth tokens for the user.
+     *
+     * @param uuid uuid of the user to be deleted
+     */
+    public void deleteExistingAuthDetailsForUser(String uuid) {
+        try {
+            entityManager.createNamedQuery(DELETE_AUTH_TOKEN_BY_UUID, UserAuthEntity.class).setParameter("uuid", uuid);
+        } catch (Exception e) {
+            return;
+        }
     }
 }
