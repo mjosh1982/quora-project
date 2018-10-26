@@ -5,5 +5,8 @@ package com.upgrad.quora.service.type;
  * Based on the type of action specific exceptions will be thrown.
  */
 public enum ActionType {
-    VIEW, EDIT, DELETE, CREATE, ALL_QUESTION, ALL_FOR_USER;
+    //Question related actions
+    EDIT_QUESTION, DELETE_QUESTION, CREATE_QUESTION, ALL_QUESTION, ALL_QUESTION_FOR_USER,
+    //Answer related actions
+    EDIT_ANSWER, DELETE_ANSWER, CREATE_ANSWER, GET_ALL_ANSWER_TO_QUESTION;
 }

@@ -175,7 +175,7 @@ public class UserDao {
      * @param authorizationToken access token value
      * @return UserAuthntity Object
      */
-    public UserAuthEntity checkaAuthToken(final String authorizationToken) {
+    public UserAuthEntity checkAuthToken(final String authorizationToken) {
         try {
 
             return entityManager.createNamedQuery(CHECK_AUTH_TOKEN, UserAuthEntity.class).setParameter("accessToken", authorizationToken)
