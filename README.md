@@ -14,5 +14,19 @@ Next section, we will define the pre-requisites for this application.
 
 ##Steps for installing the project.
 
-TBD
+1. Import the project in Intellij idea using option "Checkout from Version Control"
+
+2. Select git as the option
+
+3. Use the URL https://github.com/mjosh1982/quora-project.git to clone the repository on your local machine
+
+4. Once the project gets imported in you local workspace, you need to add the jar file postgresql in your classpath.
+
+5. right click on the postgresql jar file and select "Add to library"
+
+6. Then goto Application.yaml and for the Postgresql driver select suggesstion in red and select add to classpath
+
+7. This will add the file to classpath.
+
+8. Goto file QuoraApiApplication, right click and run it as a Java application.
 
