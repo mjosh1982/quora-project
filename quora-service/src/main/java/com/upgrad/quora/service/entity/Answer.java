@@ -10,7 +10,13 @@ import java.time.ZonedDateTime;
  * Updates for Answer entity
  */
 @Entity
-@Table(name = "question", schema = "public")
+@Table(name = "answer", schema = "public")
+@NamedQueries(
+        {
+                @NamedQuery(name = "getAnswerForUuId", query = "select ans from Answer ans where uuid=:uuid"),
+                @NamedQuery(name = "getAnsersForQuestion", query = "select ans from Answer ans where ans.question.uuid=:uuid")
+        }
+)
 public class Answer {
 
     @Id
@@ -23,7 +29,7 @@ public class Answer {
     @NotNull
     private String uuid;
 
-    @Column(name = "answer")
+    @Column(name = "ans")
     @Size(max = 255)
     @NotNull
     private String answer;

@@ -93,30 +93,54 @@ public class QuestionService {
         if (question == null) {
             throw new InvalidQuestionException("QUES-001", "Entered question uuid does not exist");
         } else if (!question.getUser().getUuid().equals(authorizedUser.getUser().getUuid())) {
-            if (actionType.equals(ActionType.DELETE)) {
+            if (actionType.equals(ActionType.DELETE_QUESTION)) {
                 throw new AuthorizationFailedException("ATHR-003", "Only the question owner or admin can delete the question");
             } else {//that means edit mode. Hence show different message as mentioned in the assignment
                 throw new AuthorizationFailedException("ATHR-003", "Only the question owner can edit the question");
             }
-        } else if (authorizedUser.getUser().getRole().equals(RoleType.admin) && actionType.equals(ActionType.DELETE)) {
+        } else if (!authorizedUser.getUser().getRole().equals(RoleType.admin)
+                && !question.getUser().getUuid().equals(authorizedUser.getUser().getUuid())
+                && actionType.equals(ActionType.DELETE_QUESTION)) {
             throw new AuthorizationFailedException("ATHR-003", "Only the question owner or admin can delete the question");
         } else {
             return question;
         }
     }
 
+
     /**
      * method used to edit question.
      *
-     * @param question
+     * @param question question object to be edited in database
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void editQuestion(Question question) {
         questionDao.editQuestion(question);
     }
 
+    /**
+     * method used for deleting the question
+     *
+     * @param question question object to be removed from Database.
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteQuestion(Question question) {
         questionDao.deleteQuestion(question);
+    }
+
+    /**
+     * method used for getting question object for the specific question uuid
+     * Throws InvalidQuestionException if question is not found.
+     *
+     * @param questionUuId uuid of the question
+     * @return Question object
+     */
+    public Question getQuestionForUuId(String questionUuId) throws InvalidQuestionException {
+        Question question = questionDao.getQuestion(questionUuId);
+        if (question == null) {
+            throw new InvalidQuestionException("QUES-001", "The question entered is invalid");
+        } else {
+            return question;
+        }
     }
 }

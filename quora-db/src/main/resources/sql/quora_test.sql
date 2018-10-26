@@ -25,4 +25,4 @@ insert into question (id,uuid,content,date,user_id) values(1024,'database_questi
 
 
 --Insert values in ANSWER table
-insert into answer(id,uuid,ans,date,user_id,question_id) values (1024,'database_answer_uuid','my_answer','2018-09-17 19:41:19.593',1026,1024);
+insert into answer(id,uuid,answer,date,user_id,question_id) values (1024,'database_answer_uuid','my_answer','2018-09-17 19:41:19.593',1026,1024);

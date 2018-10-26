@@ -16,12 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.upgrad.quora.api.model.QuestionDeleteResponse;
 import com.upgrad.quora.api.model.QuestionResponse;
 import com.upgrad.quora.api.model.QuestionRequest;
 import com.upgrad.quora.api.model.QuestionDetailsResponse;
-import com.upgrad.quora.api.model.QuestionEditRequest;
 import com.upgrad.quora.api.model.QuestionEditResponse;
+import com.upgrad.quora.api.model.QuestionEditRequest;
+import com.upgrad.quora.api.model.QuestionDeleteResponse;
 
 
 import java.time.ZonedDateTime;
@@ -51,8 +51,8 @@ public class QuestionController {
      * @throws AuthorizationFailedException if user is not signed then this exception is thrown
      */
     @RequestMapping(method = RequestMethod.POST, path = "/question/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<QuestionResponse> createQuestion(final QuestionRequest questionRequest, @RequestHeader final String authorization) throws AuthorizationFailedException {
-        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.CREATE);
+    public ResponseEntity<com.upgrad.quora.api.model.QuestionResponse> createQuestion(final QuestionRequest questionRequest, @RequestHeader final String authorization) throws AuthorizationFailedException {
+        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.CREATE_QUESTION);
         UserEntity user = authorizedUser.getUser();
         Question question = new Question();
         question.setUser(authorizedUser.getUser());
@@ -103,9 +103,9 @@ public class QuestionController {
      */
     @RequestMapping(method = RequestMethod.PUT, path = "/question/edit/{questionId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionEditResponse> editQuestionContent(QuestionEditRequest questionEditRequest, @PathVariable("questionId") final String questionId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, InvalidQuestionException {
-        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.EDIT);
+        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.EDIT_QUESTION);
         //Check if the user himself is the owner and trying to edit it and return the question object
-        Question question = questionService.isUserQuestionOwner(questionId, authorizedUser, ActionType.EDIT);
+        Question question = questionService.isUserQuestionOwner(questionId, authorizedUser, ActionType.EDIT_QUESTION);
         question.setContent(questionEditRequest.getContent());
         questionService.editQuestion(question);
         QuestionEditResponse questionEditResponse = new QuestionEditResponse().id(question.getUuid()).status("QUESTION EDITED");
@@ -125,9 +125,9 @@ public class QuestionController {
      */
     @RequestMapping(method = RequestMethod.DELETE, path = "/question/delete/{questionId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionDeleteResponse> userDelete(@PathVariable("questionId") final String questionUuId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, InvalidQuestionException {
-        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.DELETE);
+        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.DELETE_QUESTION);
         //Check if the user himself is the owner and trying to edit it and return the question object
-        Question question = questionService.isUserQuestionOwner(questionUuId, authorizedUser, ActionType.DELETE);
+        Question question = questionService.isUserQuestionOwner(questionUuId, authorizedUser, ActionType.DELETE_QUESTION);
         questionService.deleteQuestion(question);
         QuestionDeleteResponse questionDeleteResponse = new QuestionDeleteResponse()
                 .id(question.getUuid())
@@ -137,9 +137,9 @@ public class QuestionController {
 
     //getAllQuestionsByUser
 
-    @RequestMapping(method = RequestMethod.GET, path = "/all/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/question/all/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionDetailsResponse> getAllQuestionsByUser(@PathVariable("userId") final String uuId, @RequestHeader("authorization") final String authorization) throws AuthorizationFailedException, QuestionNotFoundException, UserNotFoundException {
-        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.ALL_FOR_USER);
+        UserAuthEntity authorizedUser = userAdminService.getUserByAccessToken(authorization, ActionType.ALL_QUESTION_FOR_USER);
         //Get the list of questions for the user
         List<Question> questionList = questionService.getQuestionsForUser(uuId);
         StringBuilder contentBuilder = new StringBuilder();
@@ -152,13 +152,15 @@ public class QuestionController {
         return new ResponseEntity<QuestionDetailsResponse>(questionResponse, HttpStatus.OK);
     }
 
+
     /**
      * private utility method for appending the uuid of questions.
      *
      * @param questionList List of questions
      * @param uuIdBuilder  StringBuilder object
      */
-    private StringBuilder getUuIdString(List<Question> questionList, StringBuilder uuIdBuilder) {
+    public static final StringBuilder getUuIdString(List<Question> questionList, StringBuilder uuIdBuilder) {
+
         for (Question questionObject : questionList) {
             uuIdBuilder.append(questionObject.getUuid()).append(",");
         }
@@ -171,11 +173,10 @@ public class QuestionController {
      * @param questionList list of questions
      * @param builder      StringBuilder with appended content list.
      */
-    private StringBuilder getContentsString(List<Question> questionList, StringBuilder builder) {
+    public static final StringBuilder getContentsString(List<Question> questionList, StringBuilder builder) {
         for (Question questionObject : questionList) {
             builder.append(questionObject.getContent()).append(",");
         }
         return builder;
     }
-
 }
